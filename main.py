@@ -200,7 +200,7 @@ def _train_single_phase(
                 )
                 break
 
-    model.load_state_dict(torch.load(ckpt_path, map_location=device))
+    model.load_state_dict(torch.load(ckpt_path, map_location=device, weights_only=True))
     print(f"\n✓ Best checkpoint loaded from {ckpt_path}")
     return model
 

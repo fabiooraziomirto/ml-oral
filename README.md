@@ -1,6 +1,6 @@
 # ML
 
-[![Open in Colab](https://colab.research.google.com/assets/colab-badge.svg)](https://colab.research.google.com/github/PLACEHOLDER/ML-Bitto/blob/main/reproduce.ipynb)
+[![Open in Colab](https://colab.research.google.com/assets/colab-badge.svg)](https://colab.research.google.com/github/fabiooraziomirto/ML-Bitto/blob/main/reproduce.ipynb)
 
 Pipeline PyTorch per classificazione binaria di immagini cliniche/orali.
 
@@ -34,10 +34,7 @@ Note:
 
 ## Requisiti
 
-Python 3.10.12 usato e testato.
-
-Altre versioni di Python potrebbero funzionare, ma al momento non sono state
-validate in questo repository.
+Python 3.10+ richiesto (testato su 3.10.12).
 
 Installazione dipendenze:
 
@@ -146,5 +143,3 @@ Quindi il flusso è:
 2. crea le cartelle `data/public_dataset_1` e/o `data/clinical_dataset`
 3. copia le immagini dentro `images/`
 4. crea `labels.csv` o `metadata.csv` con le colonne richieste sopra
-
-Se vuoi, nel prossimo passaggio posso aggiungere anche una sezione con un esempio pratico di preparazione dataset a partire da uno zip o da un CSV grezzo.

@@ -62,25 +62,27 @@ class TrainingConfig:
 
 class BinaryClassificationModel(nn.Module):
     """Binary classification model with backbone and custom head."""
-    
-    def __init__(self, model_type: str = "resnet18", pretrained: bool = True, 
+
+    def __init__(self, model_type: str = "resnet18", pretrained: bool = True,
                  dropout_rate: float = 0.5):
         super().__init__()
-        
+
         self.model_type = model_type
-        
+
         if model_type == "resnet18":
-            from torchvision.models import resnet18
-            self.backbone = resnet18(pretrained=pretrained)
+            from torchvision.models import resnet18, ResNet18_Weights
+            weights = ResNet18_Weights.DEFAULT if pretrained else None
+            self.backbone = resnet18(weights=weights)
             in_features = self.backbone.fc.in_features
             self.backbone.fc = nn.Identity()
-            
+
         elif model_type == "efficientnet_b0":
-            from torchvision.models import efficientnet_b0
-            self.backbone = efficientnet_b0(pretrained=pretrained)
+            from torchvision.models import efficientnet_b0, EfficientNet_B0_Weights
+            weights = EfficientNet_B0_Weights.DEFAULT if pretrained else None
+            self.backbone = efficientnet_b0(weights=weights)
             in_features = self.backbone.classifier[1].in_features
             self.backbone.classifier = nn.Identity()
-            
+
         else:
             raise ValueError(f"Unknown model type: {model_type}")
         
@@ -323,11 +325,10 @@ def save_checkpoint(model: BinaryClassificationModel, optimizer: torch.optim.Opt
     print(f"✓ Checkpoint saved: {checkpoint_path}")
 
 
-def load_checkpoint(model: BinaryClassificationModel, checkpoint_path: str, 
+def load_checkpoint(model: BinaryClassificationModel, checkpoint_path: str,
                    device: str) -> Dict:
     """Load model checkpoint."""
-    
-    checkpoint = torch.load(checkpoint_path, map_location=device)
+    checkpoint = torch.load(checkpoint_path, map_location=device, weights_only=True)
     model.load_state_dict(checkpoint['model_state_dict'])
     print(f"✓ Checkpoint loaded: {checkpoint_path}")
     return checkpoint
